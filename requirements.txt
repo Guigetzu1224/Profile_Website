@@ -2,3 +2,4 @@ flask_wtf
 wtforms
 gunicorn
 flask
+flask-mail

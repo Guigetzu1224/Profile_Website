@@ -1,9 +1,13 @@
 from flask import Flask, escape, request, render_template, flash, url_for, redirect
-from forms import RegistrationForm
-
+from forms import ContactForm
+from flask_mail import Message, Mail
+from globals import initialize # Private variables
 app = Flask(__name__)
+mail = Mail(app)
+initialize(app)
+mail = Mail(app)
 # Irrelevant, this key is public on github
-app.config['SECRET_KEY'] = '9a047fca6ed2a0524aa92912ca476006'
+
 
 @app.route('/')
 @app.route('/home')
@@ -14,29 +18,28 @@ def home():
 def aboutMe():
   return render_template('aboutMe.html')
 
-
 @app.route('/contactMe', methods=['GET', 'POST'])
-def contactMe():
-	form = RegistrationForm()
-	if form.validate_on_submit():
-		flash(f"You're email was sent! I'll get back to you within 24 hours" ) #Success is the bootstrap class
-		return redirect( url_for('home') )
-	return render_template('contactMe.html', form=form)
+def contactMe():  
+
+  form = ContactForm(request.form)
+  if request.method == 'POST':
+    if form.validate() == False:
+      print(form.validate())
+      return render_template('contactMe.html', form=form)
+    else:
+      msg = Message(form.subject.data,recipients=['sstein17@fordham.edu'])
+      msg.body = ("""
+      From: {}; Name {};
+      {}
+      """.format(str(form.name.data), str(form.email.data), str(form.message.data)))
+      mail.send(msg)
+      return render_template('contactMe.html', success=True)
+ 
+  elif request.method == 'GET':
+    return render_template('contactMe.html', form=form)
 
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-	form = RegistrationForm()
-	if form.validate_on_submit():
-		flash(f'Account Created for {form.username.data}!', 'success' ) #Success is the bootstrap class
-		return redirect( url_for('home') )
-	''' 
-		flash(f'Incorrect information! Try again!')
-		return redirect (url_for('register'))
-		'''
-	return render_template('register.html',title='Register',form=form)
 
-'''
 if __name__ == '__main__':
 	app.run(debug=True)
-'''
+
