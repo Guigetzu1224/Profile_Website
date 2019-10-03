@@ -33,7 +33,7 @@ def contactMe():
       {}
       """.format(str(form.name.data), str(form.email.data), str(form.message.data)))
       mail.send(msg)
-      return render_template('contactMe.html', success=True)
+      return render_template('main.html', success=True)
  
   elif request.method == 'GET':
     return render_template('contactMe.html', form=form)
