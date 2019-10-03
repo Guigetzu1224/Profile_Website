@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Samuel Stein</title>
+	<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.5/velocity.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
+	<script type="text/javascript" src='app.js'></script>
+
+
+</head>
+<body>
+
+	<div class='navBar'>
+		<div id='primary'>
+			<a href='{{ url_for("home")}}'>Samuel Stein</a>
+			<a href='{{ url_for("aboutMe")}}'>Past work & Downloads</a>
+		</div>
+		<div id='secondary'>
+			<a href='{{ url_for("contactMe")}}'>Contact Me</a>
+		</div>
+	</div>
+	</div>
+		{% with messages = get_flashed_messages(with_categories=true)  %}
+        		{% if messages %}
+        			{% for category, message in messages %}
+        				<div class='alert alert-{{ category }}'>
+        					{{ message }}∂∂
+        				</div>
+        			{% endfor %}
+        		{% endif %}
+        	{% endwith %}
+          {% block content %}{% endblock %}
+
+
+
+
+	<div class='media'>
+		<h1>Social Media</h1>
+			<a href="https://twitter.com/samuelstein1224" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
+			<a href="https://www.facebook.com/samuel.stein.395" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
+			<a href="https://www.linkedin.com/in/sam-stein-9ab8bb149/" class="icon-button google-plus"><i class="icon-linked-in fa-linkedin-in"></i><span></span></a>
+			<a href="https://github.com/Guigetzu1224" class="icon-button google-plus"><i class="icon-linked-in fa-github"></i><span></span></a>
+			<!-- Code sourced and used from minimalmonkey !-->
+	</div>
+</body>
+</html>
