@@ -1,7 +1,8 @@
 from flask import Flask, escape, request, render_template, flash, url_for, redirect
 from forms import RegistrationForm
-app = Flask(__name__)
 
+app = Flask(__name__)
+# Irrelevant, this key is public on github
 app.config['SECRET_KEY'] = '9a047fca6ed2a0524aa92912ca476006'
 
 @app.route('/')
@@ -35,6 +36,7 @@ def register():
 		'''
 	return render_template('register.html',title='Register',form=form)
 
-
+'''
 if __name__ == '__main__':
 	app.run(debug=True)
+'''
